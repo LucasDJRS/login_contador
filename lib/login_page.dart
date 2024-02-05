@@ -9,8 +9,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String email = '';
-  String passowrd = '';
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,32 +21,38 @@ class _LoginPageState extends State<LoginPage> {
           height: MediaQuery.of(context).size.height,
           child: Padding(
             padding: EdgeInsets.all(8.0),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              TextField(
-                onChanged: (text) {
-                  email = text;
-                },
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                    labelText: 'Email', border: OutlineInputBorder()),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                onChanged: (text) {
-                  passowrd = text;
-                },
-                obscureText: true,
-                decoration: InputDecoration(
-                    labelText: 'Password', border: OutlineInputBorder()),
-              ),
-              SizedBox(height: 10),
-              ElevatedButton(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
                   onPressed: () {
+                    String email = emailController.text;
+                    String password = passwordController.text;
                     if (email == 'jorjao_da_massa@humcoffee.com' &&
-                        passowrd == 'cafezin123') {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => HomePage(email: email)));
+                        password == 'cafezin123') {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(email: email),
+                        ),
+                      );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -56,8 +62,10 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     }
                   },
-                  child: Text('Entrar'))
-            ]),
+                  child: Text('Entrar'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
