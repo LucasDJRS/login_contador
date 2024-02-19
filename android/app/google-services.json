@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "57631332181",
+    "project_id": "teste-login-jorjao-humtech",
+    "storage_bucket": "teste-login-jorjao-humtech.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57631332181:android:65b6a29ae1d611cfb901dc",
+        "android_client_info": {
+          "package_name": "com.example.login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe2YZ5tJLRhxoA0a0_0QtJAOhZ2GdfLt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
