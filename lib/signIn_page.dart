@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login/HomePage.dart';
-import 'package:login/signIn_page.dart';
+import 'package:login/login_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignInPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<SignInPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _firebaseAuth = FirebaseAuth.instance;
@@ -93,22 +93,13 @@ class _LoginPageState extends State<LoginPage> {
                     child: SizedBox.expand(
                       child: TextButton(
                         onPressed: () {
-                          login(context);
+                          signIn(context);
                         },
-                        child: Text('Entrar',
+                        child: Text('Cadasrtar',
                             style: TextStyle(
                                 color: Color.fromARGB(255, 91, 95, 146))),
                       ),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignInPage()));
-                    },
-                    child: Text('Criar conta'),
                   ),
                 ],
               ),
@@ -119,32 +110,16 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  login(BuildContext context) async {
-    try {
-      UserCredential userCredential =
-          await _firebaseAuth.signInWithEmailAndPassword(
-              email: _emailController.text, password: _passwordController.text);
-      if (userCredential != null) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => HomePage(email: _emailController.text),
-          ),
-        );
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Usuário Não encontrado!'),
-          ),
-        );
-      } else if (e.code == 'wrong-passord') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Senha inválida!'),
-          ),
-        );
-      }
-    }
+  signIn(BuildContext context) async {
+    _firebaseAuth
+        .createUserWithEmailAndPassword(
+            email: _emailController.text, password: _passwordController.text)
+        .then((UserCredential userCredential) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => HomePage(email: _emailController.text),
+        ),
+      );
+    }).catchError((FirebaseAuthException firebaseAuthException) {});
   }
 }
