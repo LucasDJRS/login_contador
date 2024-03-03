@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:login/app_controller.dart';
 
 class HomePage extends StatefulWidget {
-  final String email;
-  HomePage({required this.email, Key? key}) : super(key: key);
+  final String name;
+  HomePage({required this.name, Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() {
@@ -26,7 +26,7 @@ class HomePageState extends State<HomePage> {
         width: double.infinity,
         height: double.infinity,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text('Bem-Vindo, ${widget.email}'),
+          Text('Bem-Vindo, ${widget.name}'),
           Text('Contador: $counter'),
           Container(height: 10),
           CustomSwitch(),

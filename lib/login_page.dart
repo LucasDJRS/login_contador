@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
       if (userCredential != null) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => HomePage(email: _emailController.text),
+            builder: (context) => HomePage(name: _emailController.text),
           ),
         );
       }

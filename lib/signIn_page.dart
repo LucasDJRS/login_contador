@@ -12,6 +12,7 @@ class SignInPage extends StatefulWidget {
 
 class _LoginPageState extends State<SignInPage> {
   final _emailController = TextEditingController();
+  final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _firebaseAuth = FirebaseAuth.instance;
 
@@ -46,6 +47,20 @@ class _LoginPageState extends State<SignInPage> {
                     child: Image.asset("assets/humtech_logo.png"),
                   ),
                   SizedBox(height: 50),
+                  TextFormField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Nome',
+                      labelStyle: TextStyle(
+                        color: Colors.black38,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                      ),
+                      border: OutlineInputBorder(),
+                    ),
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(height: 10),
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -111,15 +126,33 @@ class _LoginPageState extends State<SignInPage> {
   }
 
   signIn(BuildContext context) async {
-    _firebaseAuth
-        .createUserWithEmailAndPassword(
-            email: _emailController.text, password: _passwordController.text)
-        .then((UserCredential userCredential) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => HomePage(email: _emailController.text),
+    try {
+      UserCredential userCredential =
+          await _firebaseAuth.createUserWithEmailAndPassword(
+              email: _emailController.text, password: _passwordController.text);
+
+      if (userCredential != null) {
+        userCredential.user?.updateDisplayName(_nameController.text);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Usuário cadastrado com sucesso!'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => HomePage(name: _nameController.text),
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao cadastrar usuário'),
+          duration: Duration(seconds: 2),
         ),
       );
-    }).catchError((FirebaseAuthException firebaseAuthException) {});
+    }
   }
 }
