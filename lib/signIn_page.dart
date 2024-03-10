@@ -14,6 +14,8 @@ class _LoginPageState extends State<SignInPage> {
   final _emailController = TextEditingController();
   final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _cpfController = TextEditingController();
+  final _addressController = TextEditingController();
   final _firebaseAuth = FirebaseAuth.instance;
 
   @override
@@ -51,6 +53,35 @@ class _LoginPageState extends State<SignInPage> {
                     controller: _nameController,
                     decoration: InputDecoration(
                       labelText: 'Nome',
+                      labelStyle: TextStyle(
+                        color: Colors.black38,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                      ),
+                      border: OutlineInputBorder(),
+                    ),
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                    controller: _cpfController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'CPF',
+                      labelStyle: TextStyle(
+                        color: Colors.black38,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                      ),
+                      border: OutlineInputBorder(),
+                    ),
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                    controller: _addressController,
+                    decoration: InputDecoration(
+                      labelText: 'Endereço',
                       labelStyle: TextStyle(
                         color: Colors.black38,
                         fontWeight: FontWeight.w400,
@@ -110,7 +141,7 @@ class _LoginPageState extends State<SignInPage> {
                         onPressed: () {
                           signIn(context);
                         },
-                        child: Text('Cadasrtar',
+                        child: Text('Cadastrar',
                             style: TextStyle(
                                 color: Color.fromARGB(255, 91, 95, 146))),
                       ),
